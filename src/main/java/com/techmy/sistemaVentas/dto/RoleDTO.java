@@ -1,0 +1,16 @@
+package com.techmy.sistemaVentas.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RoleDTO {
+
+	private Integer idrole;
+	private String rolenombre;
+	private String roledescripcion;
+	private String rolecodigo;
+}
