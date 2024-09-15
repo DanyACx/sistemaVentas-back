@@ -29,8 +29,8 @@ public interface UserMapper {
 	@Select({"SELECT * FROM dev_sysmain.persona WHERE id_persona = #{numdocumento}"})
 	Optional<Persona> getPersonaPorNumDocumento(String numdocumento);
 	
-	@Select({"SELECT * FROM dev_sysmain.user_auth ORDER BY id_user_auth DESC"})
-	List<UserAuth> getListaUsuarios();
+	//@Select({"SELECT id_user_auth, username, password, bloqueado, baja, fecha_registro, persona_id FROM dev_sysmain.user_auth ORDER BY id_user_auth DESC"})
+	List<UserAuth> getListaUsuarios(); //
 	
 	@Select({"SELECT * FROM dev_sysmain.user_auth WHERE username = #{username}"})
 	Optional<UserAuth> getUserPorUsername(String username);
@@ -44,9 +44,11 @@ public interface UserMapper {
 	@Select({"SELECT * FROM dev_sysmain.role ORDER BY id_role DESC"})
 	List<Role> getListaRoles();
 	
+	int insertarUserAuth(UserAuth userAuth);
+	
 	@Insert({
-		"INSERT INTO dev_sysmain.role (username, password, bloqueado, persona_id) ",
-		"   VALUES (#{rolenombre}, #{roledescripcion}, #{rolecodigo})"
+		"INSERT INTO dev_sysmain.user_role (id_user_auth, id_role) ",
+		"   VALUES (#{iduserauth}, #{idrole})"
 	})
-	int insertUserAuth(Role role);
+	int agregarRolUserAuth(UserAuth userauth);
 }

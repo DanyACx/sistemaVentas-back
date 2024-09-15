@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.techmy.sistemaVentas.dao.UserMapper">
+
+    <insert id="insertarUserAuth" parameterType="com.techmy.sistemaVentas.models.UserAuth">
+        <selectKey keyProperty="iduserauth" order="BEFORE" resultType="Integer">
+            SELECT nextval('dev_sysmain.user_auth_seq'::regclass)
+        </selectKey>
+        INSERT INTO dev_sysmain.user_auth(id_user_auth, username, password, persona_id)
+             VALUES (#{iduserauth,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{personaid,jdbcType=INTEGER})
+    </insert>
+    
+    <select id="getListaUsuarios" resultType="com.techmy.sistemaVentas.models.UserAuth">
+		${limitBefore}
+		SELECT id_user_auth, username, password, bloqueado, baja, fecha_registro, persona_id FROM dev_sysmain.user_auth ORDER BY id_user_auth DESC
+		${limitAfter}
+	</select>
+   
+</mapper>

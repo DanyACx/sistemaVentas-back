@@ -14,11 +14,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserAuthDTO {
 
+	private Integer iduserauth;
 	private String username;
 	private String password;
-	private Date fechacreacion;
+	private Date fecharegistro;
 	private Integer bloqueado;
 	private Integer baja;
 	private Integer personaid;
+	private Integer idrole;
 	private Set<Role> roles;
 }

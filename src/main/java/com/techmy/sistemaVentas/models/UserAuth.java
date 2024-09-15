@@ -19,10 +19,11 @@ public class UserAuth {
 	private String username;
 	@NotBlank
 	private String password;
-	private Date fechacreacion;
+	private Date fecharegistro;
 	private Integer bloqueado;
 	private Integer baja;
 	private Integer personaid;
+	private Integer idrole;
 	private Set<Role> roles;
 	
 }

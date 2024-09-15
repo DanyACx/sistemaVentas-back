@@ -1,10 +1,7 @@
 package com.techmy.sistemaVentas.service.serviceImpl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +12,11 @@ import com.techmy.sistemaVentas.dto.RoleDTO;
 import com.techmy.sistemaVentas.dto.UserAuthDTO;
 import com.techmy.sistemaVentas.models.Persona;
 import com.techmy.sistemaVentas.models.Role;
-import com.techmy.sistemaVentas.models.UserAuth;
 import com.techmy.sistemaVentas.service.IUsuarioService;
 
 @Service
-public class UsuarioServiceImpl implements IUsuarioService{
-	
+public class UsuarioServiceImpl2 implements IUsuarioService{
+
 	@Autowired
 	private UserMapper mapper;
 
@@ -67,44 +63,13 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
 	@Override
 	public void insertarUserAuth(UserAuthDTO userAuthDTO) {
-		UserAuth userAuth = UserAuth.builder()
-				.username(userAuthDTO.getUsername())
-				.password(userAuthDTO.getPassword())
-				.personaid(userAuthDTO.getPersonaid())
-				.build();
-		
-		 mapper.insertarUserAuth(userAuth);
-		 agregarRoles(userAuth.getIduserauth(), userAuthDTO.getRoles());
-	}
+		// TODO Auto-generated method stub
 	
-	public void agregarRoles(Integer iduserauth, Set<Role> roles) {
-		
-		UserAuth userauth = new UserAuth();
-		
-		for(Role rol : roles) {
-			userauth.setIduserauth(iduserauth);
-			userauth.setIdrole(rol.getIdrole());
-			mapper.agregarRolUserAuth(userauth);
-		}
 	}
 
 	@Override
 	public List<Map<String, Object>> getListarUsuarios() {
-		List<UserAuth> usuarios = mapper.getListaUsuarios();
-		List<Map<String, Object>> resultado = new ArrayList<>();
-		
-		 for (UserAuth usuario : usuarios) {
-	            Map<String, Object> mapaUsuario = new HashMap<>();
-	            mapaUsuario.put("iduserauth", usuario.getIduserauth());
-	            mapaUsuario.put("username", usuario.getUsername());
-	            mapaUsuario.put("bloqueado", usuario.getBloqueado());
-	            mapaUsuario.put("baja", usuario.getBaja());
-	            mapaUsuario.put("idpersona", usuario.getPersonaid());
-	            // Agregar otros campos que sean relevantes
-	            resultado.add(mapaUsuario);
-	        }
-
-	        return resultado;
+		// TODO Auto-generated method stub
+		return null;
 	}
-
 }
