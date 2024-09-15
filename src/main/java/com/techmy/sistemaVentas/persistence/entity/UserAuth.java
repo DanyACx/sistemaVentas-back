@@ -1,21 +1,23 @@
-package com.techmy.sistemaVentas.dto;
-
+package com.techmy.sistemaVentas.persistence.entity;
 import java.util.Date;
 import java.util.Set;
 
-import com.techmy.sistemaVentas.models.Role;
-
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAuthDTO {
+@Builder
+public class UserAuth {
 
 	private Integer iduserauth;
+	@NotBlank
 	private String username;
+	@NotBlank
 	private String password;
 	private Date fecharegistro;
 	private Integer bloqueado;
@@ -23,4 +25,5 @@ public class UserAuthDTO {
 	private Integer personaid;
 	private Integer idrole;
 	private Set<Role> roles;
+	
 }

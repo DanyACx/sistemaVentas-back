@@ -1,4 +1,4 @@
-package com.techmy.sistemaVentas.models;
+package com.techmy.sistemaVentas.persistence.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

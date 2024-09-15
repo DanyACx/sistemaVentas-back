@@ -1,4 +1,4 @@
-package com.techmy.sistemaVentas.dto;
+package com.techmy.sistemaVentas.presentation.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

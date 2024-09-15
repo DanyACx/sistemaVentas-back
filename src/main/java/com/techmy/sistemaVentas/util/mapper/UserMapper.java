@@ -1,4 +1,4 @@
-package com.techmy.sistemaVentas.dao;
+package com.techmy.sistemaVentas.util.mapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.techmy.sistemaVentas.models.Persona;
-import com.techmy.sistemaVentas.models.Role;
-import com.techmy.sistemaVentas.models.UserAuth;
+import com.techmy.sistemaVentas.persistence.entity.Persona;
+import com.techmy.sistemaVentas.persistence.entity.Role;
+import com.techmy.sistemaVentas.persistence.entity.UserAuth;
 
 @Mapper
 public interface UserMapper {

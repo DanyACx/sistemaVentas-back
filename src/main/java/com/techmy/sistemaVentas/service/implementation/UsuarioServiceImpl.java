@@ -1,4 +1,4 @@
-package com.techmy.sistemaVentas.service.serviceImpl;
+package com.techmy.sistemaVentas.service.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,14 +9,14 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.techmy.sistemaVentas.dao.UserMapper;
-import com.techmy.sistemaVentas.dto.PersonaDTO;
-import com.techmy.sistemaVentas.dto.RoleDTO;
-import com.techmy.sistemaVentas.dto.UserAuthDTO;
-import com.techmy.sistemaVentas.models.Persona;
-import com.techmy.sistemaVentas.models.Role;
-import com.techmy.sistemaVentas.models.UserAuth;
-import com.techmy.sistemaVentas.service.IUsuarioService;
+import com.techmy.sistemaVentas.persistence.entity.Persona;
+import com.techmy.sistemaVentas.persistence.entity.Role;
+import com.techmy.sistemaVentas.persistence.entity.UserAuth;
+import com.techmy.sistemaVentas.presentation.dto.PersonaDTO;
+import com.techmy.sistemaVentas.presentation.dto.RoleDTO;
+import com.techmy.sistemaVentas.presentation.dto.UserAuthDTO;
+import com.techmy.sistemaVentas.service.interfaces.IUsuarioService;
+import com.techmy.sistemaVentas.util.mapper.UserMapper;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService{

@@ -1,4 +1,4 @@
-package com.techmy.sistemaVentas.controller;
+package com.techmy.sistemaVentas.presentation.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.techmy.sistemaVentas.dto.PersonaDTO;
-import com.techmy.sistemaVentas.dto.RoleDTO;
-import com.techmy.sistemaVentas.dto.UserAuthDTO;
-import com.techmy.sistemaVentas.models.Persona;
-import com.techmy.sistemaVentas.models.Role;
-import com.techmy.sistemaVentas.service.IUsuarioService;
+import com.techmy.sistemaVentas.persistence.entity.Persona;
+import com.techmy.sistemaVentas.persistence.entity.Role;
+import com.techmy.sistemaVentas.presentation.dto.PersonaDTO;
+import com.techmy.sistemaVentas.presentation.dto.RoleDTO;
+import com.techmy.sistemaVentas.presentation.dto.UserAuthDTO;
+import com.techmy.sistemaVentas.service.interfaces.IUsuarioService;
 
 import jakarta.validation.Valid;
 
