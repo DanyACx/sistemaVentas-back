@@ -20,6 +20,10 @@ public class UserAuthDTO {
 	private Date fecharegistro;
 	private Integer bloqueado;
 	private Integer baja;
+	private boolean isEnabled;
+	private boolean accountNoExpired;
+	private boolean accountNoLocked;
+	private boolean credentialNoExpired;
 	private Integer personaid;
 	private Integer idrole;
 	private Set<Role> roles;

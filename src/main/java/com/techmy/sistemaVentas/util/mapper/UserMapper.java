@@ -2,11 +2,16 @@ package com.techmy.sistemaVentas.util.mapper;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
+import com.techmy.sistemaVentas.persistence.entity.Permiso;
 import com.techmy.sistemaVentas.persistence.entity.Persona;
 import com.techmy.sistemaVentas.persistence.entity.Role;
 import com.techmy.sistemaVentas.persistence.entity.UserAuth;
@@ -32,8 +37,37 @@ public interface UserMapper {
 	//@Select({"SELECT id_user_auth, username, password, bloqueado, baja, fecha_registro, persona_id FROM dev_sysmain.user_auth ORDER BY id_user_auth DESC"})
 	List<UserAuth> getListaUsuarios(); //
 	
-	@Select({"SELECT * FROM dev_sysmain.user_auth WHERE username = #{username}"})
-	Optional<UserAuth> getUserPorUsername(String username);
+	@Select({"SELECT id_user_auth, username, password, bloqueado, baja, is_enabled, account_No_Expired, ",
+			 " account_No_Locked, credential_No_Expired, persona_id ",
+			 " FROM dev_sysmain.user_auth ",
+			 " WHERE username = #{username}"})
+	@Results(value = { @Result(property = "iduserauth", column = "id_user_auth"),
+			@Result(property = "roles", column = "id_user_auth", javaType = Set.class, many = @Many(select = "com.techmy.sistemaVentas.util.mapper.UserMapper.getRolesFromUserAuth")) })
+	Optional<UserAuth> getUserAuthPorUsername(String username);
+	
+	@Select({"SELECT r.id_role, r.role_nombre, r.role_descripcion, r.role_codigo  ",
+			 "  FROM dev_sysmain.user_auth ua ",
+			 "  INNER JOIN dev_sysmain.user_role ur ",
+			 "  ON ua.id_user_auth = ur.id_user_auth ",
+			 "  INNER JOIN dev_sysmain.role r ",
+			 "  ON ur.id_role = r.id_role ",
+			 "  WHERE ua.id_user_auth = #{iduserauth} "
+		})
+	@Results(value = { @Result(property = "idrole", column = "id_role"),
+			@Result(property = "permisos", column = "id_role", javaType = Set.class, many = @Many(select = "com.techmy.sistemaVentas.util.mapper.UserMapper.getPermisosFromRole")) })
+	Set<Role> getRolesFromUserAuth(Integer iduserauth);
+	
+	@Select({"SELECT p.id_permiso, p.permiso_nombre FROM dev_sysmain.role r  ",
+		 "  INNER JOIN dev_sysmain.role_permiso rp ",
+		 "  ON r.id_role = rp.id_role ",
+		 "  INNER JOIN dev_sysmain.permiso p ",
+		 "  ON rp.id_permiso = p.id_permiso ",
+		 "  WHERE r.id_role = #{idrole} "
+	})
+	Set<Permiso> getPermisosFromRole(Integer idrole);
+	
+	@Select({"SELECT id_permiso, permiso_nombre FROM dev_sysmain.role ORDER BY id_role DESC"})
+	Set<Permiso> getPermisos();
 	
 	@Insert({
 		"INSERT INTO dev_sysmain.role (role_nombre, role_descripcion, role_codigo) ",

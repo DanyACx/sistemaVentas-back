@@ -6,8 +6,9 @@
         <selectKey keyProperty="iduserauth" order="BEFORE" resultType="Integer">
             SELECT nextval('dev_sysmain.user_auth_seq'::regclass)
         </selectKey>
-        INSERT INTO dev_sysmain.user_auth(id_user_auth, username, password, persona_id)
-             VALUES (#{iduserauth,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{personaid,jdbcType=INTEGER})
+        INSERT INTO dev_sysmain.user_auth(id_user_auth, username, password, persona_id, is_enabled, account_no_expired, account_no_locked, credential_no_expired)
+             VALUES (#{iduserauth,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{personaid,jdbcType=INTEGER},
+             		 #{is_enabled,jdbcType=BOOLEAN}, #{account_No_Expired,jdbcType=BOOLEAN}, #{account_No_Locked,jdbcType=BOOLEAN}, #{credential_No_Expired,jdbcType=BOOLEAN})
     </insert>
     
     <select id="getListaUsuarios" resultType="com.techmy.sistemaVentas.persistence.entity.UserAuth">

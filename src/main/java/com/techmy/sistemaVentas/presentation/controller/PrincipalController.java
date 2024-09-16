@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/principal")
+@PreAuthorize("denyAll()")
 public class PrincipalController {
 
 	private IUsuarioService usuarioService; // private final IUsuarioService usuarioService;
@@ -60,6 +62,7 @@ public class PrincipalController {
 	}
 	
 	@GetMapping("/listarPersonas")
+	@PreAuthorize("hasAuthority('READ')")
 	public List<Persona> listarClientes(){
 		return usuarioService.getPersonas();
 	}
@@ -78,6 +81,7 @@ public class PrincipalController {
 	}
 	
 	@GetMapping("/listarRoles")
+	@PreAuthorize("hasAuthority('READ')")
 	public List<Role> listarRoles(){
 		return usuarioService.getListarRoles();
 	}
@@ -96,6 +100,7 @@ public class PrincipalController {
 	}
 	
 	@GetMapping("/listarUsuarios")
+	@PreAuthorize("hasAuthority('READ')")
 	public ResponseEntity<List<Map<String, Object>>> listarUsuarios(){
 		 List<Map<String, Object>> usuarios = usuarioService.getListarUsuarios();
 	        return new ResponseEntity<>(usuarios, HttpStatus.OK);
