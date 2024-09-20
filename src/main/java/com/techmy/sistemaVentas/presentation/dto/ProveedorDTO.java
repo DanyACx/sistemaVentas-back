@@ -9,17 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonaDTO {
+public class ProveedorDTO {
 
-
-	private String nombres;
-	private String appaterno;
-	private String apmaterno;
-	private String tipopersona;
-	private String tipodocumento;
-	private String numdocumento;
-	private String direccion;
+	private String ruc;
+	private String razonsocial;
+	private String banco;
 	private String telefono;
-	private String email;
 	private Date fecharegistro;
 }

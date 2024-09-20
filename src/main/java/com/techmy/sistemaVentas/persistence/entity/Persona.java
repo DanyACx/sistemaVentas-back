@@ -30,5 +30,5 @@ public class Persona {
 	private String telefono;
 	@Email
 	private String email;
-	private Date fechacreacion; // import java.util.Date; para fecha normal 
+	private Date fecharegistro; // import java.util.Date; para fecha normal 
 }

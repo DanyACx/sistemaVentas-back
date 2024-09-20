@@ -7,12 +7,15 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.techmy.sistemaVentas.persistence.entity.Persona;
+import com.techmy.sistemaVentas.persistence.entity.Proveedor;
 import com.techmy.sistemaVentas.persistence.entity.Role;
 import com.techmy.sistemaVentas.persistence.entity.UserAuth;
 import com.techmy.sistemaVentas.presentation.dto.PersonaDTO;
+import com.techmy.sistemaVentas.presentation.dto.ProveedorDTO;
 import com.techmy.sistemaVentas.presentation.dto.RoleDTO;
 import com.techmy.sistemaVentas.presentation.dto.UserAuthDTO;
 import com.techmy.sistemaVentas.service.interfaces.IUsuarioService;
@@ -23,6 +26,9 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	
 	@Autowired
 	private UserMapper mapper;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public List<Persona> getPersonas() {
@@ -69,7 +75,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	public void insertarUserAuth(UserAuthDTO userAuthDTO) {
 		UserAuth userAuth = UserAuth.builder()
 				.username(userAuthDTO.getUsername())
-				.password(userAuthDTO.getPassword())
+				.password(passwordEncoder.encode(userAuthDTO.getPassword()))
 				.personaid(userAuthDTO.getPersonaid())
 				.build();
 		
@@ -105,6 +111,23 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	        }
 
 	        return resultado;
+	}
+	
+	public int insertarProveedor(ProveedorDTO proveedorDTO) {
+		Proveedor proveedor = Proveedor.builder()
+				.ruc(proveedorDTO.getRuc())
+				.razonsocial(proveedorDTO.getRazonsocial())
+				.banco(proveedorDTO.getBanco())
+				.telefono(proveedorDTO.getTelefono())
+				.build();
+		
+		 return mapper.insertProveedor(proveedor);
+	}
+	
+	@Override
+	public List<Proveedor> getListaProveedores() {
+		
+		return mapper.getListaProveedores();
 	}
 
 }

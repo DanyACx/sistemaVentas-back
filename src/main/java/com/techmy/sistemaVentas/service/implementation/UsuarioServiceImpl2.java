@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.techmy.sistemaVentas.persistence.entity.Persona;
+import com.techmy.sistemaVentas.persistence.entity.Proveedor;
 import com.techmy.sistemaVentas.persistence.entity.Role;
 import com.techmy.sistemaVentas.presentation.dto.PersonaDTO;
+import com.techmy.sistemaVentas.presentation.dto.ProveedorDTO;
 import com.techmy.sistemaVentas.presentation.dto.RoleDTO;
 import com.techmy.sistemaVentas.presentation.dto.UserAuthDTO;
 import com.techmy.sistemaVentas.service.interfaces.IUsuarioService;
@@ -69,6 +71,18 @@ public class UsuarioServiceImpl2 implements IUsuarioService{
 
 	@Override
 	public List<Map<String, Object>> getListarUsuarios() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insertarProveedor(ProveedorDTO proveedorDTO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Proveedor> getListaProveedores() {
 		// TODO Auto-generated method stub
 		return null;
 	}

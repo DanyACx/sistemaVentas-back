@@ -1,5 +1,6 @@
 package com.techmy.sistemaVentas.configuration.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,13 +15,26 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.techmy.sistemaVentas.configuration.jwt.JwtTokenValidator;
+import com.techmy.sistemaVentas.configuration.jwt.JwtUtils;
 import com.techmy.sistemaVentas.service.implementation.UserDetailServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+	
+	//@Autowired
+	//private JwtUtils jwtUtils; //  Este es un uso común, aunque menos recomendado por cuestiones de claridad y testabilidad.
+	
+	private final JwtUtils jwtUtils;
+	
+	@Autowired
+	public SecurityConfig(JwtUtils jwtUtils) { // Es la forma más recomendada, ya que promueve la inmutabilidad y facilita la realización de pruebas
+        this.jwtUtils = jwtUtils;
+    }
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -28,6 +42,7 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable())
 				.httpBasic(Customizer.withDefaults())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class) // antes del filtro de autenticacion
 				.build();
 	}
 

@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Select;
 
 import com.techmy.sistemaVentas.persistence.entity.Permiso;
 import com.techmy.sistemaVentas.persistence.entity.Persona;
+import com.techmy.sistemaVentas.persistence.entity.Proveedor;
 import com.techmy.sistemaVentas.persistence.entity.Role;
 import com.techmy.sistemaVentas.persistence.entity.UserAuth;
 
@@ -85,4 +86,17 @@ public interface UserMapper {
 		"   VALUES (#{iduserauth}, #{idrole})"
 	})
 	int agregarRolUserAuth(UserAuth userauth);
+	
+	List<Role> findRolesByNames(List<String> roleNames);
+	
+	@Insert({
+		"INSERT INTO dev_sysmain.proveedor (ruc, razon_social, banco, telefono) ",
+		"   VALUES (#{ruc}, #{razonsocial}, #{banco}, #{telefono})"
+	})
+	int insertProveedor(Proveedor proveedor);
+	
+	@Select({"SELECT id_proveedor, ruc, razon_social, banco, telefono, fecha_registro ",
+		 "  FROM dev_sysmain.proveedor ORDER BY id_proveedor DESC"})
+	List<Proveedor> getListaProveedores();
+	
 }

@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techmy.sistemaVentas.persistence.entity.Persona;
+import com.techmy.sistemaVentas.persistence.entity.Proveedor;
 import com.techmy.sistemaVentas.persistence.entity.Role;
 import com.techmy.sistemaVentas.presentation.dto.PersonaDTO;
+import com.techmy.sistemaVentas.presentation.dto.ProveedorDTO;
 import com.techmy.sistemaVentas.presentation.dto.RoleDTO;
 import com.techmy.sistemaVentas.presentation.dto.UserAuthDTO;
 import com.techmy.sistemaVentas.service.interfaces.IUsuarioService;
@@ -38,17 +40,8 @@ public class PrincipalController {
 		// estás asegurando que su valor no cambiará después de la inicialización
 	}
 
-	@GetMapping("/hola")
-	public String hello() {
-		return "holaaa sin seguridad";
-	}
-
-	@GetMapping("/holaSeguro")
-	public String helloSeguro() {
-		return "holaaa con seguridad";
-	}
-
 	@PostMapping("/crearPersona")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('DEVELOPER')")
 	public ResponseEntity<?> createPersona(@Valid @RequestBody PersonaDTO personaDTO) {
 		
 		try {
@@ -62,12 +55,13 @@ public class PrincipalController {
 	}
 	
 	@GetMapping("/listarPersonas")
-	@PreAuthorize("hasAuthority('READ')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')")
 	public List<Persona> listarClientes(){
 		return usuarioService.getPersonas();
 	}
 
 	@PostMapping("/crearRol")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('DEVELOPER')")
 	public ResponseEntity<?> createRol(@Valid @RequestBody RoleDTO roleDTO) {
 		
 		try {
@@ -81,12 +75,13 @@ public class PrincipalController {
 	}
 	
 	@GetMapping("/listarRoles")
-	@PreAuthorize("hasAuthority('READ')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')")
 	public List<Role> listarRoles(){
 		return usuarioService.getListarRoles();
 	}
 	
 	@PostMapping("/crearUserAuth")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('DEVELOPER')")
 	public ResponseEntity<?> insertarUserAuth(@Valid @RequestBody UserAuthDTO userAuthDTO) {
 		
 		try {
@@ -100,10 +95,30 @@ public class PrincipalController {
 	}
 	
 	@GetMapping("/listarUsuarios")
-	@PreAuthorize("hasAuthority('READ')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')") // @PreAuthorize("hasAuthority('READ')")
 	public ResponseEntity<List<Map<String, Object>>> listarUsuarios(){
 		 List<Map<String, Object>> usuarios = usuarioService.getListarUsuarios();
 	        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+	}
+	
+	@PostMapping("/crearProveedor")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('DEVELOPER')")
+	public ResponseEntity<?> createProveedor(@Valid @RequestBody ProveedorDTO proveedorDTO) {
+		
+		try {
+			usuarioService.insertarProveedor(proveedorDTO);
+			return new ResponseEntity<>("Se registro proveedor con exito", HttpStatus.CREATED);
+		} catch (Exception e) {
+			// Maneja la excepción y responde con un código específico
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/listarProveedores")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')") // @PreAuthorize("hasAuthority('READ')")
+	public List<Proveedor> listarProveedores(){
+		return usuarioService.getListaProveedores();
 	}
 
 }
