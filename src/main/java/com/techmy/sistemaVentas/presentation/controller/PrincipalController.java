@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.techmy.sistemaVentas.persistence.entity.Persona;
 import com.techmy.sistemaVentas.persistence.entity.Proveedor;
 import com.techmy.sistemaVentas.persistence.entity.Role;
+import com.techmy.sistemaVentas.persistence.entity.Trabajador;
 import com.techmy.sistemaVentas.presentation.dto.PersonaDTO;
 import com.techmy.sistemaVentas.presentation.dto.ProveedorDTO;
 import com.techmy.sistemaVentas.presentation.dto.RoleDTO;
+import com.techmy.sistemaVentas.presentation.dto.TrabajadorDTO;
 import com.techmy.sistemaVentas.presentation.dto.UserAuthDTO;
 import com.techmy.sistemaVentas.service.interfaces.IUsuarioService;
 
@@ -119,6 +121,26 @@ public class PrincipalController {
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')") // @PreAuthorize("hasAuthority('READ')")
 	public List<Proveedor> listarProveedores(){
 		return usuarioService.getListaProveedores();
+	}
+	
+	@PostMapping("/crearTrabajador")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('DEVELOPER')")
+	public ResponseEntity<?> createTrabajador(@Valid @RequestBody TrabajadorDTO trabajadorDTO) {
+		
+		try {
+			usuarioService.insertarTrabajador(trabajadorDTO);
+			return new ResponseEntity<>("Se registro trabajador con exito", HttpStatus.CREATED);
+		} catch (Exception e) {
+			// Maneja la excepción y responde con un código específico
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/listarTrabajadores")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')") // @PreAuthorize("hasAuthority('READ')")
+	public List<Trabajador> listarTrabajores(){
+		return usuarioService.getListaTrabajadores();
 	}
 
 }

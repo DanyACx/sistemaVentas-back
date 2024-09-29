@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.techmy.sistemaVentas.util.mapper.CategoriaMapper">
+
+    <insert id="insertarIngreso" parameterType="com.techmy.sistemaVentas.persistence.entity.Ingreso">
+        <selectKey keyProperty="idingreso" order="BEFORE" resultType="Integer">
+            SELECT nextval('dev_sysmain.registro_ingreso_seq'::regclass)
+        </selectKey>
+        INSERT INTO dev_sysmain.ingreso(id_ingreso, tipo_comprobante, serie_comprobante, impuesto, descripcion, fecha_compra, trabajador_id, proveedor_id)
+             VALUES (#{idingreso,jdbcType=INTEGER}, #{tipocomprobante,jdbcType=VARCHAR}, #{seriecomprobante,jdbcType=VARCHAR}, #{impuesto,jdbcType=DECIMAL},
+             		  #{descripcion,jdbcType=VARCHAR}, #{fechacompra,jdbcType=VARCHAR}, #{trabajadorid,jdbcType=INTEGER}, #{proveedorid,jdbcType=INTEGER})
+    </insert>
+    
+</mapper>

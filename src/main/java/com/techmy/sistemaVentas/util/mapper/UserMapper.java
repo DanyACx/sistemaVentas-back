@@ -15,6 +15,7 @@ import com.techmy.sistemaVentas.persistence.entity.Permiso;
 import com.techmy.sistemaVentas.persistence.entity.Persona;
 import com.techmy.sistemaVentas.persistence.entity.Proveedor;
 import com.techmy.sistemaVentas.persistence.entity.Role;
+import com.techmy.sistemaVentas.persistence.entity.Trabajador;
 import com.techmy.sistemaVentas.persistence.entity.UserAuth;
 
 @Mapper
@@ -98,5 +99,15 @@ public interface UserMapper {
 	@Select({"SELECT id_proveedor, ruc, razon_social, banco, telefono, fecha_registro ",
 		 "  FROM dev_sysmain.proveedor ORDER BY id_proveedor DESC"})
 	List<Proveedor> getListaProveedores();
+	
+	@Insert({
+		"INSERT INTO dev_sysmain.trabajador (codigo, persona_id) ",
+		"   VALUES (#{codigo}, #{personaid})"
+	})
+	int insertarTrabajador(Trabajador trabajador);
+	
+	@Select({"SELECT id_trabajador, codigo, activo_trabajador, fecha_cese, persona_id, fecha_registro ",
+		 "  FROM dev_sysmain.trabajador ORDER BY id_trabajador DESC"})
+	List<Trabajador> getListaTrabajadores();
 	
 }
