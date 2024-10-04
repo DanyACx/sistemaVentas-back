@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.techmy.sistemaVentas.persistence.entity.Almacen;
 import com.techmy.sistemaVentas.persistence.entity.Categoria;
 import com.techmy.sistemaVentas.persistence.entity.Ingreso;
+import com.techmy.sistemaVentas.persistence.entity.TarifaVenta;
 import com.techmy.sistemaVentas.presentation.dto.CategoriaDTO;
 import com.techmy.sistemaVentas.presentation.dto.IngresoDTO;
+import com.techmy.sistemaVentas.presentation.dto.TarifaVentaDTO;
 import com.techmy.sistemaVentas.service.interfaces.ICategoriaService;
 
 import jakarta.validation.Valid;
@@ -73,6 +76,32 @@ public class CategoriaController {
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')")
 	public List<Ingreso> listarIngresos(){
 		return categoriaService.getListaIngreso();
+	}
+	
+	@GetMapping("/listarAlmacen")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')")
+	public List<Almacen> listarAlmacen(){
+		return categoriaService.getListaAlmacen();
+	}
+	
+	@PostMapping("/crearTarifaVenta")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('DEVELOPER')")
+	public ResponseEntity<?> createTarifaVenta(@Valid @RequestBody TarifaVentaDTO tarifaVentaDTO) {
+		
+		try {
+			categoriaService.insertarTarifaVenta(tarifaVentaDTO);
+			return new ResponseEntity<>("Precio Tarifa se registro con exito", HttpStatus.CREATED);
+		} catch (Exception e) {
+			// Maneja la excepción y responde con un código específico
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/listarTarifaVenta")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')")
+	public List<TarifaVenta> listarTarifaVenta(){
+		return categoriaService.getListaTarifaVenta();
 	}
 	
 }

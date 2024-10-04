@@ -1,8 +1,6 @@
 package com.techmy.sistemaVentas.util.mapper;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Many;
@@ -12,9 +10,11 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
+import com.techmy.sistemaVentas.persistence.entity.Almacen;
 import com.techmy.sistemaVentas.persistence.entity.Articulo;
 import com.techmy.sistemaVentas.persistence.entity.Categoria;
 import com.techmy.sistemaVentas.persistence.entity.Ingreso;
+import com.techmy.sistemaVentas.persistence.entity.TarifaVenta;
 
 @Mapper
 public interface CategoriaMapper {
@@ -70,5 +70,39 @@ public interface CategoriaMapper {
 		 "  WHERE ingreso_id = #{idingreso} "
 	})
 	List<Articulo> getArticulosFromIngreso(Integer idingreso);
+	
+	@Insert({
+		"<script>",
+		"INSERT INTO dev_sysmain.almacen(",
+	    "             codigo_articulo,",
+	    "             cantidad,",
+	    "             nombre,",
+		"             trabajador_id)",
+		"     VALUES ",
+		"   <foreach collection='list' item='item' separator=','>",
+		"             (#{item.codigoarticulo},",
+		"             #{item.cantidad},",
+		"             #{item.nombre},",
+		"             #{item.trabajadorid})",
+		"   </foreach>",
+		"</script>"
+	})
+	void insertarAlmacen(@Param("list") List<Almacen> data);
+	
+	@Select({"SELECT id_almacen, codigo_articulo, cantidad, nombre, trabajador_id, fecha_registro  ",
+		 "  FROM dev_sysmain.almacen ORDER BY id_almacen DESC"
+	})
+	List<Almacen> getListaAlmacen();
+	
+	@Insert({
+		"INSERT INTO dev_sysmain.tarifa_venta (precio_venta, user_auth_id, codigo_articulo) ",
+		"   VALUES (#{precioventa}, #{userauthid}, #{codigoarticulo})"
+	})
+	void insertarTarifaVenta(TarifaVenta tarifaVenta);
+	
+	@Select({"SELECT id_tarifa_venta, precio_venta, estado, user_auth_id, codigo_articulo, fecha_registro  ",
+		 "  FROM dev_sysmain.tarifa_venta ORDER BY id_tarifa_venta DESC"
+	})
+	List<TarifaVenta> getListaTarifaVenta();
 
 }
