@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.techmy.sistemaVentas.util.mapper.VentaMapper">
+
+    <insert id="insertarVenta" parameterType="com.techmy.sistemaVentas.persistence.entity.Venta">
+        <selectKey keyProperty="idventa" order="BEFORE" resultType="Integer">
+            SELECT nextval('dev_sysmain.registro_venta_seq'::regclass)
+        </selectKey>
+        INSERT INTO dev_sysmain.venta(id_venta, codigo_venta, trabajador_id, cliente_id, igv)
+             VALUES (#{idventa,jdbcType=INTEGER}, #{codigoventa,jdbcType=VARCHAR},#{trabajadorid,jdbcType=INTEGER}, #{clienteid,jdbcType=INTEGER},
+              #{igv,jdbcType=DECIMAL})
+    </insert>
+    
+</mapper>
