@@ -7,6 +7,7 @@ import com.techmy.sistemaVentas.persistence.entity.Persona;
 import com.techmy.sistemaVentas.persistence.entity.Proveedor;
 import com.techmy.sistemaVentas.persistence.entity.Role;
 import com.techmy.sistemaVentas.persistence.entity.Trabajador;
+import com.techmy.sistemaVentas.persistence.entity.UserAuth;
 import com.techmy.sistemaVentas.presentation.dto.PersonaDTO;
 import com.techmy.sistemaVentas.presentation.dto.ProveedorDTO;
 import com.techmy.sistemaVentas.presentation.dto.RoleDTO;
@@ -25,4 +26,6 @@ public interface IUsuarioService {
 	List<Proveedor> getListaProveedores();
 	int insertarTrabajador(TrabajadorDTO trabajadorDTO);
 	List<Trabajador> getListaTrabajadores();
+	Persona getPersonaByID(Integer personaid);
+	List<UserAuth> getListUserWithRoles();
 }

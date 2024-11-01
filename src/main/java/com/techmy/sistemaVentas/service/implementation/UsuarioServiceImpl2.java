@@ -10,6 +10,7 @@ import com.techmy.sistemaVentas.persistence.entity.Persona;
 import com.techmy.sistemaVentas.persistence.entity.Proveedor;
 import com.techmy.sistemaVentas.persistence.entity.Role;
 import com.techmy.sistemaVentas.persistence.entity.Trabajador;
+import com.techmy.sistemaVentas.persistence.entity.UserAuth;
 import com.techmy.sistemaVentas.presentation.dto.PersonaDTO;
 import com.techmy.sistemaVentas.presentation.dto.ProveedorDTO;
 import com.techmy.sistemaVentas.presentation.dto.RoleDTO;
@@ -97,6 +98,18 @@ public class UsuarioServiceImpl2 implements IUsuarioService{
 
 	@Override
 	public List<Trabajador> getListaTrabajadores() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Persona getPersonaByID(Integer personaid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UserAuth> getListUserWithRoles() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -26,9 +26,14 @@ public interface UserMapper {
 			 "  FROM dev_sysmain.persona ORDER BY id_persona DESC"})
 	List<Persona> getListaPersonas();
 	
+	@Select({"SELECT id_persona, nombres, ap_paterno, ap_materno, tipo_persona, tipo_documento, num_documento,",
+		 "direccion, telefono, email, fecha_registro ",
+		 "  FROM dev_sysmain.persona WHERE id_persona = #{personaid}"})
+	Persona getPersonaByID(Integer personaid);
+	
 	@Insert({
 		"INSERT INTO dev_sysmain.persona (nombres, ap_paterno, ap_materno, tipo_persona, tipo_documento, num_documento, direccion, telefono, email) ",
-		"   VALUES (#{nombres}, #{apellidopaterno}, #{apellidomaterno}, #{tipopersona}, #{tipodocumento}, #{numdocumento},",
+		"   VALUES (#{nombres}, #{appaterno}, #{apmaterno}, #{tipopersona}, #{tipodocumento}, #{numdocumento},",
 		"   		#{direccion}, #{telefono}, #{email})"
 	})
 	int insertPersona(Persona persona);
@@ -110,4 +115,10 @@ public interface UserMapper {
 		 "  FROM dev_sysmain.trabajador ORDER BY id_trabajador DESC"})
 	List<Trabajador> getListaTrabajadores();
 	
+	@Select({"SELECT id_user_auth, username, password, bloqueado, baja, is_enabled, account_No_Expired, ",
+		 " account_No_Locked, credential_No_Expired, persona_id, fecha_registro ",
+		 " FROM dev_sysmain.user_auth "})
+	@Results(value = { @Result(property = "iduserauth", column = "id_user_auth"),
+		@Result(property = "roles", column = "id_user_auth", javaType = Set.class, many = @Many(select = "com.techmy.sistemaVentas.util.mapper.UserMapper.getRolesFromUserAuth")) })
+	List<UserAuth> getListUserWithRoles();
 }

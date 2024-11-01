@@ -37,6 +37,11 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		
 		return mapper.getListaPersonas();
 	}
+	
+	public Persona getPersonaByID(Integer personaid) {
+		
+		return mapper.getPersonaByID(personaid);
+	}
 
 	@Override
 	public int insertarPersona(PersonaDTO personaDTO) {
@@ -113,6 +118,12 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	        }
 
 	        return resultado;
+	}
+	
+	@Override
+	public List<UserAuth> getListUserWithRoles() {
+		
+		return mapper.getListUserWithRoles();
 	}
 	
 	public int insertarProveedor(ProveedorDTO proveedorDTO) {

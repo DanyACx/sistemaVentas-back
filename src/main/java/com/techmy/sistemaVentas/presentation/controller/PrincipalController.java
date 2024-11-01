@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.techmy.sistemaVentas.persistence.entity.Persona;
 import com.techmy.sistemaVentas.persistence.entity.Proveedor;
 import com.techmy.sistemaVentas.persistence.entity.Role;
 import com.techmy.sistemaVentas.persistence.entity.Trabajador;
+import com.techmy.sistemaVentas.persistence.entity.UserAuth;
 import com.techmy.sistemaVentas.presentation.dto.PersonaDTO;
 import com.techmy.sistemaVentas.presentation.dto.ProveedorDTO;
 import com.techmy.sistemaVentas.presentation.dto.RoleDTO;
@@ -103,6 +105,12 @@ public class PrincipalController {
 	        return new ResponseEntity<>(usuarios, HttpStatus.OK);
 	}
 	
+	@GetMapping("/listarUsuariosConRoles")
+	@PreAuthorize("hasRole('DEVELOPER')") // @PreAuthorize("hasAuthority('READ')")
+	public List<UserAuth> listUserWithRoles(){
+		return usuarioService.getListUserWithRoles();
+	}
+	
 	@PostMapping("/crearProveedor")
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('DEVELOPER')")
 	public ResponseEntity<?> createProveedor(@Valid @RequestBody ProveedorDTO proveedorDTO) {
@@ -141,6 +149,12 @@ public class PrincipalController {
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')") // @PreAuthorize("hasAuthority('READ')")
 	public List<Trabajador> listarTrabajores(){
 		return usuarioService.getListaTrabajadores();
+	}
+	
+	@GetMapping("/buscarPersona/{personaid}")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('INVITADO') OR hasRole('USER') OR hasRole('DEVELOPER')")
+	public Persona buscarPersona(@PathVariable("personaid") Integer personaid){
+		return usuarioService.getPersonaByID(personaid);
 	}
 
 }

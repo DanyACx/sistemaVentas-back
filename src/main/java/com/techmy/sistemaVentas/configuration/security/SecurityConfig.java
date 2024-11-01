@@ -1,6 +1,6 @@
 package com.techmy.sistemaVentas.configuration.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +31,7 @@ public class SecurityConfig {
 	
 	private final JwtUtils jwtUtils;
 	
-	@Autowired
+	//@Autowired
 	public SecurityConfig(JwtUtils jwtUtils) { // Es la forma más recomendada, ya que promueve la inmutabilidad y facilita la realización de pruebas
         this.jwtUtils = jwtUtils;
     }
@@ -40,7 +40,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		return httpSecurity
 				.csrf(csrf -> csrf.disable())
-				.httpBasic(Customizer.withDefaults())
+				//.httpBasic(Customizer.withDefaults())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class) // antes del filtro de autenticacion
 				.build();
@@ -77,7 +77,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public AuthenticationProvider authentiationProvider(UserDetailServiceImpl userDetailServiceImpl) {
+	public AuthenticationProvider authenticationProvider(UserDetailServiceImpl userDetailServiceImpl) { // se conecta a la base de datos y trae el usuario
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setPasswordEncoder(passwordEncoder());
 		provider.setUserDetailsService(userDetailServiceImpl);
